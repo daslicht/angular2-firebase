@@ -3,7 +3,12 @@
 </h1>
 
 <hr>
-(wait for ~20 seconds...)
-<h2>Item:</h2>
-
-{{ (item | async)?.name }}
+<div>
+  <div>
+      <h2>Set User</h2>
+      <button (click)="setUser()">Set User</button>
+      <h2>Get User</h2>
+      <button (click)="getUser()">Get User</button>
+  </div>
+  <div> Response {{response}}</div>
+</div>

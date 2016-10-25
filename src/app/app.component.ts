@@ -1,27 +1,34 @@
 import { Component } from '@angular/core';
-import {AngularFire,FirebaseObjectObservable} from 'angularfire2';
+import { FirebaseRestService } from './firebase-rest.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers:[FirebaseRestService]
 })
 
 export class AppComponent {
-  af: AngularFire;localStorage
 
-  item: FirebaseObjectObservable<any>;
+  response:string;
+  
+  constructor(private firebaseService: FirebaseRestService, ) {
 
-  constructor(af: AngularFire) {
-    this.af =  af ;
-    this.item = af.database.object('/item');
   }
 
-  login() {
-      this.af.auth.login();
-    }
-
-  logout() {
-     this.af.auth.logout();
+  setUser() {
+    this.firebaseService.setUser("foo", "bar").subscribe(
+      user => this.response = JSON.stringify(user),
+      error => console.log(error)
+    );
   }
+
+  getUser(){
+    this.firebaseService.getUser().subscribe(
+      user => this.response = JSON.stringify(user),
+      error => console.log(error)
+    );
+  }
+
+
 }
