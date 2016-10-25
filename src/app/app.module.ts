@@ -2,11 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { AppComponent } from './app.component';
 
-// Must export the config
 export const firebaseConfig = {
   apiKey: 'AIzaSyAzrtKXwKL5kAoa9dbGt9x32YWA7Yi_Jec',
   authDomain: 'test-fad8a.firebaseapp.com',
@@ -14,6 +13,11 @@ export const firebaseConfig = {
   storageBucket: 'test-fad8a.appspot.com',
   messagingSenderId: "113730117393"
 };
+
+const firebaseAuthConfig = {
+  provider: AuthProviders.Google,
+  method: AuthMethods.Redirect
+}
 
 @NgModule({
   declarations: [
@@ -23,7 +27,7 @@ export const firebaseConfig = {
     BrowserModule,
     FormsModule,
     HttpModule,
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]

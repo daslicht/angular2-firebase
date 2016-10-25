@@ -8,13 +8,20 @@ import {AngularFire,FirebaseObjectObservable} from 'angularfire2';
 })
 
 export class AppComponent {
-  
-  title = 'app works!';
+  af: AngularFire;localStorage
 
   item: FirebaseObjectObservable<any>;
 
   constructor(af: AngularFire) {
+    this.af =  af ;
     this.item = af.database.object('/item');
   }
 
+  login() {
+      this.af.auth.login();
+    }
+
+  logout() {
+     this.af.auth.logout();
+  }
 }
