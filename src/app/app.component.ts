@@ -5,13 +5,13 @@ import { FirebaseRestService } from './firebase-rest.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers:[FirebaseRestService]
+  providers: [FirebaseRestService]
 })
 
 export class AppComponent {
 
-  response:string;
-  
+  response: string;
+
   constructor(private firebaseService: FirebaseRestService, ) {
 
   }
@@ -23,7 +23,7 @@ export class AppComponent {
     );
   }
 
-  getUser(){
+  getUser() {
     this.firebaseService.getUser().subscribe(
       user => this.response = JSON.stringify(user),
       error => console.log(error)

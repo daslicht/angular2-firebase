@@ -1,4 +1,4 @@
-# Angular2Firebase
+# Angular2Firebase REST
 
 [Demo](https://daslicht.github.io/angular2-firebase/ )
 
