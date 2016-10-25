@@ -2,8 +2,20 @@
   {{title}}
 </h1>
 
+<button md-raised-button (click)="login()">
+ Login with Google
+</button>
+<div *ngIf="user">
+  <button md-raised-button (click)="logout()">
+    Logout
+  </button>
+  User:
+  <img src="{{user.google.photoURL}}"/>
+</div>
 <hr>
-(wait for ~20 seconds...)
-<h2>Item:</h2>
 
+
+<!--
+<h2>Item:</h2>
 {{ (item | async)?.name }}
+-->
