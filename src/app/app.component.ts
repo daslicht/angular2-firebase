@@ -92,7 +92,7 @@ export class AppComponent {
 
 	filterBy(size: string) {
 		if (size === 'all') {
-			alert('how?');
+			console.log("how ? see: https://github.com/angular/angularfire2/issues/642" );  
 		}
 		this.sizeSubject.next(size); 
 		// this.items = this.af.database.list('/items', {
