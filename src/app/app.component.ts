@@ -27,6 +27,7 @@ export class AppComponent {
 		text:""
 	};
 	image: string;
+	storageRef;
 	constructor(private af: AngularFire, @Inject(FirebaseApp) firebaseApp: any) {
 		this.sizeSubject = new Subject();
 		this.af.auth.subscribe(user => {
@@ -46,11 +47,11 @@ export class AppComponent {
 					console.log("queriedItems: ",queriedItems);  
 				});
 
-				const storageRef = firebaseApp.storage().ref().child('images/image.png');
-					storageRef.getDownloadURL().then(url => this.image = url);
+				this.storageRef = firebaseApp.storage().ref().child('images/image.png');
+				this.storageRef.getDownloadURL().then(url => this.image = url);
 
-				 var storage = firebaseApp.storage();
-				 console.log(storage);
+				// var storage = firebaseApp.storage();
+				// console.log(storage);
 				 //var storageRef = storage.ref();
 			}
 			else {
@@ -106,8 +107,13 @@ export class AppComponent {
 		this.items.remove();
 	}
 
-	uploadImage() {
-		
+	uploadImage(event) {
+		var files = event.srcElement.files;
+		var file = files[0]; // use the Blob or File API
+		this.storageRef.put(file).then(function(snapshot) {
+			console.log('Uploaded a blob or file!',snapshot);
+		});
+    	console.log(files[0]);
 	}
 
 	ngOnInit() {
