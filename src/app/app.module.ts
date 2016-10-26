@@ -10,12 +10,20 @@ import {
 
 import { AppComponent } from './app.component';
 
+// const firebaseConfig = {
+//     apiKey: "AIzaSyDveCJtWCu1zhyvqOBr9my4-n8_eqoeWeQ",
+//     authDomain: "oauth-b4994.firebaseapp.com",
+//     databaseURL: "https://oauth-b4994.firebaseio.com",
+//     storageBucket: "oauth-b4994.appspot.com",
+//     messagingSenderId: "803681908280"
+// };
+
 const firebaseConfig = {
-    apiKey: "AIzaSyDveCJtWCu1zhyvqOBr9my4-n8_eqoeWeQ",
-    authDomain: "oauth-b4994.firebaseapp.com",
-    databaseURL: "https://oauth-b4994.firebaseio.com",
-    storageBucket: "oauth-b4994.appspot.com",
-    messagingSenderId: "803681908280"
+    apiKey: "AIzaSyCEHxdFH4p3OV0vxuoy9iIYsnE2UDG-coo",
+    authDomain: "oauth-usa.firebaseapp.com",
+    databaseURL: "https://oauth-usa.firebaseio.com",
+    storageBucket: "oauth-usa.appspot.com",
+    messagingSenderId: "621648931093"
 };
 const firebaseAuthConfig = {
     provider: AuthProviders.Google,

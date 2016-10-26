@@ -48,6 +48,10 @@ export class AppComponent {
 
 				const storageRef = firebaseApp.storage().ref().child('images/image.png');
 					storageRef.getDownloadURL().then(url => this.image = url);
+
+				 var storage = firebaseApp.storage();
+				 console.log(storage);
+				 //var storageRef = storage.ref();
 			}
 			else {
 				// user not logged in
@@ -102,6 +106,9 @@ export class AppComponent {
 		this.items.remove();
 	}
 
+	uploadImage() {
+		
+	}
 
 	ngOnInit() {
 		//console.log('constructor: ',this.item);
