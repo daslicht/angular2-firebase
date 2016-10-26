@@ -49,9 +49,11 @@ export class AppComponent {
 				});
 
 				this.storageRef = firebaseApp.storage().ref().child('images/image.png');
-				zone.run(() => { 
-					this.storageRef.getDownloadURL().then(url => this.image = url);
-				})
+					this.storageRef.getDownloadURL().then(url =>
+						zone.run(() => { 
+							this.image = url
+						})
+					);
 
 				// var storage = firebaseApp.storage();
 				// console.log(storage);
