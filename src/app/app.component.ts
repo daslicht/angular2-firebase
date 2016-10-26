@@ -28,15 +28,15 @@ export class AppComponent {
 	};
 	image: string;
 	storageRef;
-	constructor(private af: AngularFire, @Inject(FirebaseApp) firebaseApp: any, zone:NgZone) {
+	constructor(private _af: AngularFire, @Inject(FirebaseApp) _firebaseApp: any, _zone:NgZone) {
 		this.sizeSubject = new Subject();
-		this.af.auth.subscribe(user => {
+		this._af.auth.subscribe(user => {
 			if (user) {
 				// user logged in
 				this.user = user;
 				console.log('Success: ',this.user);
 
-				this.items = af.database.list('/items', {
+				this.items = _af.database.list('/items', {
 					query: {
 						orderByChild: 'size',
 						equalTo: this.sizeSubject
@@ -48,12 +48,12 @@ export class AppComponent {
 					console.log("queriedItems: ",queriedItems);  
 				});
 
-				this.storageRef = firebaseApp.storage().ref().child('images/image.png');
-					this.storageRef.getDownloadURL().then(url =>
-						zone.run(() => { 
-							this.image = url
-						})
-					);
+				this.storageRef = _firebaseApp.storage().ref().child('images/image.png');
+				this.storageRef.getDownloadURL().then(url =>
+					_zone.run(() => { 
+						this.image = url
+					})
+				);
 
 				// var storage = firebaseApp.storage();
 				// console.log(storage);
@@ -69,14 +69,14 @@ export class AppComponent {
 	}
 
 	login() {
-		this.af.auth.login();
+		this._af.auth.login();
 		// this.af.auth.login({
 		// 	provider: AuthProviders.Google
 		// });
 	}
 
 	logout() {
-		this.af.auth.logout();
+		this._af.auth.logout();
 	}
 
 	saveItem(value:string) {
