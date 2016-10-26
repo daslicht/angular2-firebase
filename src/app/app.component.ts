@@ -86,6 +86,9 @@ export class AppComponent {
 	}
 
 	filterBy(size: string) {
+		if (size === 'all') {
+			alert('how?');
+		}
 		this.sizeSubject.next(size); 
 		// this.items = this.af.database.list('/items', {
 		// 	query: {
