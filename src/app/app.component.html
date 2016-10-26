@@ -16,47 +16,50 @@
   User:
   <div>{{user.google.displayName}}</div>
   <!--<img src="{{user.google.photoURL}}"/>-->
+
+
+  <hr>
+
+
+
+    <input type="text" [(ngModel)]="newItem.size" placeholder="Size" />
+    <input type="text" [(ngModel)]="newItem.text" placeholder="Text" />
+    <button (click)="saveItem()">>Push Item to List</button>
+    <!--button (click)="saveItem(newitem.value)">>Push Item to List</button-->
+
+
+  <hr>
+  <h2>Items:</h2>
+
+  <div>
+    <h4>Filter by size</h4>
+    <button (click)="filterBy('small')">Small</button>
+    <button (click)="filterBy('medium')">Medium</button>
+    <button (click)="filterBy('large')">Large</button>
+      <button (click)="filterBy('all')">All</button>
+  </div>
+
+  <ul>
+      <li *ngFor="let item of items | async">
+          <input type="text" #updatetext [value]="item.text" />
+          <button (click)="deleteItem(item.$key)">Delete</button>
+          <button (click)="updateItem(item.$key, updatetext.value)">Update</button>
+      </li>
+  </ul>
+
+
+  <button (click)="deleteList()">Delete List</button>
+  <br>
+  <img [src]="image">
+  <input type="file"  (change)="uploadImage($event)"/>
+  <!-- cool
+    <input type="text" #newitem />
+    <button (click)="addItem(newitem.value)">Add</button>
+
+
+      <input [(ngModel)]="item.value" placeholder="Value"/>
+    <button (click)="saveItem()">Save</button>
+    -->
+
+
 </div>
-
-<hr>
-
-
-
-  <input type="text" [(ngModel)]="newItem.size" placeholder="Size" />
-  <input type="text" [(ngModel)]="newItem.text" placeholder="Text" />
-  <button (click)="saveItem()">>Push Item to List</button>
-  <!--button (click)="saveItem(newitem.value)">>Push Item to List</button-->
-
-
-<hr>
-<h2>Items:</h2>
-
-<div>
-  <h4>Filter by size</h4>
-  <button (click)="filterBy('small')">Small</button>
-  <button (click)="filterBy('medium')">Medium</button>
-  <button (click)="filterBy('large')">Large</button>
-    <button (click)="filterBy('all')">All</button>
-</div>
-
-<ul>
-    <li *ngFor="let item of items | async">
-        <input type="text" #updatetext [value]="item.text" />
-        <button (click)="deleteItem(item.$key)">Delete</button>
-        <button (click)="updateItem(item.$key, updatetext.value)">Update</button>
-    </li>
-</ul>
-
-
-<button (click)="deleteList()">Delete List</button>
-<br>
-<img [src]="image">
-<input type="file"  (change)="uploadImage($event)"/>
-<!-- cool
-  <input type="text" #newitem />
-  <button (click)="addItem(newitem.value)">Add</button>
-
-
-    <input [(ngModel)]="item.value" placeholder="Value"/>
-  <button (click)="saveItem()">Save</button>
-  -->
