@@ -10,14 +10,17 @@ import {
 
 import { AppComponent } from './app.component';
 
-// Must export the config
-export const firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyDveCJtWCu1zhyvqOBr9my4-n8_eqoeWeQ",
     authDomain: "oauth-b4994.firebaseapp.com",
     databaseURL: "https://oauth-b4994.firebaseio.com",
     storageBucket: "oauth-b4994.appspot.com",
     messagingSenderId: "803681908280"
 };
+const firebaseAuthConfig = {
+    provider: AuthProviders.Google,
+    method: AuthMethods.Redirect 
+}
 
 @NgModule({
   declarations: [
@@ -27,10 +30,7 @@ export const firebaseConfig = {
     BrowserModule,
     FormsModule,
     HttpModule,
-    AngularFireModule.initializeApp(firebaseConfig,{
-      provider: AuthProviders.Google,
-      method: AuthMethods.Popup
-    })
+    AngularFireModule.initializeApp(firebaseConfig,firebaseAuthConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]

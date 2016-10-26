@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
 	AngularFire,
 	FirebaseObjectObservable,
 	FirebaseListObservable,
-	AuthProviders
+	AuthProviders,
+	FirebaseApp
 } from 'angularfire2';
 import { Subject } from 'rxjs/Subject';
 
@@ -25,17 +26,15 @@ export class AppComponent {
 		size:"",
 		text:""
 	};
-
-	constructor(private af: AngularFire) {
+	image: string;
+	constructor(private af: AngularFire, @Inject(FirebaseApp) firebaseApp: any) {
 		this.sizeSubject = new Subject();
 		this.af.auth.subscribe(user => {
 			if (user) {
 				// user logged in
 				this.user = user;
 				console.log('Success: ',this.user);
-				//this.item = af.database.object('/item');
-				//this.items = af.database.list('/items');
-				
+
 				this.items = af.database.list('/items', {
 					query: {
 						orderByChild: 'size',
@@ -47,6 +46,8 @@ export class AppComponent {
 					console.log("queriedItems: ",queriedItems);  
 				});
 
+				const storageRef = firebaseApp.storage().ref().child('images/image.png');
+					storageRef.getDownloadURL().then(url => this.image = url);
 			}
 			else {
 				// user not logged in
@@ -58,9 +59,10 @@ export class AppComponent {
 	}
 
 	login() {
-		this.af.auth.login({
-			provider: AuthProviders.Google
-		});
+		this.af.auth.login();
+		// this.af.auth.login({
+		// 	provider: AuthProviders.Google
+		// });
 	}
 
 	logout() {
