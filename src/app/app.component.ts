@@ -51,7 +51,7 @@ export class AppComponent {
 				this.storageRef = _firebaseApp.storage().ref().child('images/image.png');
 				this.storageRef.getDownloadURL().then(url =>
 					_zone.run(() => { 
-						this.image = url
+							this.image = url
 					})
 				);
 
@@ -100,13 +100,6 @@ export class AppComponent {
 			console.log("how ? see: https://github.com/angular/angularfire2/issues/642" );  
 		}
 		this.sizeSubject.next(size); 
-		// this.items = this.af.database.list('/items', {
-		// 	query: {
-		// 		orderByChild: 'size',
-		// 		equalTo: this.sizeSubject
-		// 	}
-		// });
-
 	}
 	deleteList() {
 		this.items.remove();
