@@ -2,20 +2,59 @@
   {{title}}
 </h1>
 
-<button md-raised-button (click)="login()">
- Login with Google
-</button>
+<div *ngIf="!user">
+  <button md-raised-button (click)="login()">
+  Login with Google
+  </button>
+</div>
+
 <div *ngIf="user">
   <button md-raised-button (click)="logout()">
     Logout
   </button>
+  <br>
   User:
-  <img src="{{user.google.photoURL}}"/>
+  <div>{{user.google.displayName}}</div>
+  <!--<img src="{{user.google.photoURL}}"/>-->
 </div>
+
 <hr>
 
 
-<!--
-<h2>Item:</h2>
-{{ (item | async)?.name }}
--->
+
+  <input type="text" [(ngModel)]="newItem.size" placeholder="Size" />
+  <input type="text" [(ngModel)]="newItem.text" placeholder="Text" />
+  <button (click)="saveItem()">>Push Item to List</button>
+  <!--button (click)="saveItem(newitem.value)">>Push Item to List</button-->
+
+
+<hr>
+<h2>Items:</h2>
+
+<div>
+  <h4>Filter by size</h4>
+  <button (click)="filterBy('small')">Small</button>
+  <button (click)="filterBy('medium')">Medium</button>
+  <button (click)="filterBy('large')">Large</button>
+    <button (click)="filterBy('*')">All</button>
+</div>
+
+<ul>
+    <li *ngFor="let item of items | async">
+        <input type="text" #updatetext [value]="item.text" />
+        <button (click)="deleteItem(item.$key)">Delete</button>
+        <button (click)="updateItem(item.$key, updatetext.value)">Update</button>
+    </li>
+</ul>
+
+
+<button (click)="deleteList()">Delete List</button>
+
+<!-- cool
+  <input type="text" #newitem />
+  <button (click)="addItem(newitem.value)">Add</button>
+
+
+    <input [(ngModel)]="item.value" placeholder="Value"/>
+  <button (click)="saveItem()">Save</button>
+  -->
