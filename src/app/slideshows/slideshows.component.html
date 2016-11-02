@@ -7,7 +7,7 @@
     Create Slideshow
   </button>
 </div>
-
+<button (click)="deleteAll()">Delete all slideshows </button>
 <hr>
 
 <ul class="slideshow-list">
@@ -31,7 +31,6 @@
     </button>
   </div>  
   <ul>
-
       <li *ngFor="let slide of slides | async">
           <p>{{slide.index}}</p>
           <input type="text" #updatename [value]="slide.name" />
@@ -41,4 +40,5 @@
           <img src="{{slide.url}}" />
       </li>
   </ul>
+  
 </div>
