@@ -7,7 +7,7 @@
     Create Slideshow
   </button>
 </div>
-<button (click)="deleteAll()">NUKE! </button>
+<button style="opacity:0" (click)="deleteAll()">NUKE! </button>
 <hr>
 
 <ul class="slideshow-list">
@@ -31,7 +31,7 @@
     </button>
   </div>  
   <ul>
-      <li *ngFor="let slide of slides | async">
+      <li *ngFor="let slide of selectedSlideshow.slides | async">
           <p>{{slide.index}}</p>
           <input type="text" #updatename [value]="slide.name" />
           <button (click)="deleteItem(slide.$key)">Delete</button>

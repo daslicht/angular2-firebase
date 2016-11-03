@@ -14,31 +14,18 @@ import { SlideshowsComponent } from './slideshows/slideshows.component';
 import { AppRoutingComponent } from './app-routing/app-routing.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 
-// const firebaseConfig = {
-//     apiKey: "AIzaSyDveCJtWCu1zhyvqOBr9my4-n8_eqoeWeQ",
-//     authDomain: "oauth-b4994.firebaseapp.com",
-//     databaseURL: "https://oauth-b4994.firebaseio.com",
-//     storageBucket: "oauth-b4994.appspot.com",
-//     messagingSenderId: "803681908280"
-// };
 
-// NO AUTH
+
+// NO AUTH 
 const firebaseConfig = {
-    apiKey: "AIzaSyBNAi0kZtkStFTvFWtIkvlEsqBYUVjqvZE",
-    authDomain: "slideshow-manager-cf739.firebaseapp.com",
-    databaseURL: "https://slideshow-manager-cf739.firebaseio.com",
-    storageBucket: "slideshow-manager-cf739.appspot.com",
-    messagingSenderId: "567232249877"
+    apiKey: "AIzaSyC7xkhj17L0tZIiBDoruRchJJJZoWGemQ8",
+    authDomain: "slides-inline.firebaseapp.com",
+    databaseURL: "https://slides-inline.firebaseio.com",
+    storageBucket: "slides-inline.appspot.com",
+    messagingSenderId: "14006184383"
 };
 
 
-// const firebaseConfig = {
-//     apiKey: "AIzaSyCEHxdFH4p3OV0vxuoy9iIYsnE2UDG-coo",
-//     authDomain: "oauth-usa.firebaseapp.com",
-//     databaseURL: "https://oauth-usa.firebaseio.com",
-//     storageBucket: "oauth-usa.appspot.com",
-//     messagingSenderId: "621648931093"
-// };
 const firebaseAuthConfig = {
     provider: AuthProviders.Google,
     method: AuthMethods.Redirect 

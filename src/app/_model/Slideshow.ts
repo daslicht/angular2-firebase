@@ -6,7 +6,7 @@ import {
 	FirebaseApp
 } from 'angularfire2';
 
-export class Slideshow {
+export class Slideshow  extends FirebaseListObservable<any>{
     index: number;
     name: string;
     $key:string;
