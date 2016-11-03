@@ -18,18 +18,19 @@
     <span class="badge">{{slideshow.id}}</span> {{slideshow.name}}
   </li>
 </ul>
-
+<hr>
 <div *ngIf="selectedSlideshow">
   <h2>
     {{selectedSlideshow.name | uppercase}}
   </h2>
   <div>
-    <label>Slide Name:</label> 
+
     <input #slidename placeholder="Slide Name" />
     <button (click)="createSlide(slidename.value); slidename.value=''">
       Create Slide
     </button>
   </div>  
+  <hr>
   <ul>
       <li *ngFor="let slide of slides | async">
           <p>{{slide.index}}</p>
