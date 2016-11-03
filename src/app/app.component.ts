@@ -34,7 +34,7 @@ export class AppComponent {
 	storageRef;
 	_zone;
 	constructor(private _af: AngularFire, @Inject(FirebaseApp) _firebaseApp: any, _zone:NgZone) {
-		this.sizeSubject = new BehaviorSubject('init value');
+		this.sizeSubject = new BehaviorSubject(null);
 		this._firebaseApp = _firebaseApp;
 		this._zone = _zone;
 
@@ -43,10 +43,16 @@ export class AppComponent {
 
 				this.user = user;
 
-				this.items = this._af.database.list('/items', {
+				// this.items = this._af.database.list('/items', {
 
-				});
+				// });
 
+   				this.items = this._af.database.list('/items', {
+                     query: {
+                        orderByChild: 'size',
+                        equalTo: this.sizeSubject
+                     }
+                 });
 
 				this.items.subscribe(queriedItems => {
 					console.log("queriedItems: ",queriedItems);  					
@@ -102,6 +108,7 @@ export class AppComponent {
 	}
 
 	filterBy(size?: string) {
+		console.log('filterby', size)
 		if (size === 'all') {
 			console.log("how ? see: https://github.com/angular/angularfire2/issues/642" );  
 		}

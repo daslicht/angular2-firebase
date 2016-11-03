@@ -24,14 +24,14 @@
   <h2>Items:</h2>
 
 <!-- FILTER -->
-<!--  <div>
+  <div>
     <h4>Filter by size</h4>
     <button (click)="filterBy('small')">Small</button>
     <button (click)="filterBy('medium')">Medium</button>
     <button (click)="filterBy('large')">Large</button>
     <button (click)="filterBy(null)">All</button>
   </div>
--->
+
   <ul>
       <li *ngFor="let item of items | async">
           <input type="text" #updatetext [value]="item.text" />
