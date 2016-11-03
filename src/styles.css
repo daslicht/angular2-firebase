@@ -2,3 +2,8 @@
 /*ul.slideshow-list li.selected {
     color: blue;
 }*/
+
+img {
+    vertical-align: middle;
+    max-width: 100px;
+}
