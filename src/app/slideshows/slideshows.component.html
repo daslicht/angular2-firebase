@@ -1,45 +1,85 @@
-<hr>
 
-<div>
-  <label>Slideshow Name:</label> 
-  <input #slideshowName placeholder="Slideshow Name" />
-  <button (click)="createSlideshow(slideshowName.value); slideshowName.value=''">
-    Create Slideshow
-  </button>
+
+<div class="row">
+	
+	<div class="col-sm-4">
+		<input #slideshowName placeholder="Slideshow Name" />
+		<button (click)="createSlideshow(slideshowName.value); slideshowName.value=''">
+			Create Slideshow
+		</button>
+		<button (click)="deleteAll()" style="opacity:0">NUKE! </button>
+		<hr>
+		<ul class="slideshow-list nav nav-pills nav-stacked">
+
+			<li *ngFor="let slideshow of slideshows | async" class="nav-item"
+					[class.selected]="slideshow === selectedSlideshow"
+					(click)="onSelect(slideshow)"
+			>
+				<span class="badge">{{slideshow.name}}</span> 
+
+			</li>
+
+		</ul>
+	</div>
+
+
+
+
+
+	<div class="col-sm-8">
+		<div *ngIf="selectedSlideshow">
+			<h3>
+				{{selectedSlideshow.name }}
+			</h3>
+			<div>
+				<input #slidename placeholder="Slide Name" />
+				<button (click)="createSlide(slidename.value); slidename.value=''">
+					Create Slide
+				</button>
+				<button (click)="deleteSelectedSlideshow(selectedSlideshow.$key);">
+					Delete Selected Slideshow 
+				</button>
+			</div>
+			<hr>
+
+			<table class="table">
+				<thead>
+					<tr>
+					<th>#</th>
+					<th>preview</th>
+					<th>Image Name</th>
+					<th>Actions</th>
+					</tr>
+				</thead>
+				<img id="hidden-img"/>
+				<tbody>
+					<tr *ngFor="let slide of slides | async">
+						<th scope="row">{{slide.index}}</th>
+						<td><img src="{{slide.url}}" /></td>
+						<td><input type="text" #updatename [value]="slide.name" /></td>
+						<td>
+							<button class="btn btn-danger" (click)="deleteSlide(slide)"><i class="fa fa-trash" aria-hidden="true"></i></button>	
+							<button class="btn btn-success" (click)="updateItem(slide.$key, updatename.value)"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+							<input type="file" id="file" (change)="addImageToSelectedSlideshow( $event, slide.$key )">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<!--<ul>
+				<li *ngFor="let slide of slides | async">
+					<p>{{slide.index}}</p>
+					<input type="text" #updatename [value]="slide.name" />
+					<button class="btn btn-danger" (click)="deleteItem(slide.$key)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+					<button class="btn btn-success" (click)="updateItem(slide.$key, updatename.value)"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+					<input type="file" id="file" (change)="addImage( $event, slide.$key )">
+					<img src="{{slide.url}}" />
+				</li>
+			</ul>-->
+
+		</div>
+	</div>
+
 </div>
-<button (click)="deleteAll()" style="opacity:0">NUKE! </button>
-<hr>
 
-<ul class="slideshow-list">
-  <li *ngFor="let slideshow of slideshows | async"
-      [class.selected]="slideshow === selectedSlideshow"
-      (click)="onSelect(slideshow)"
-  >
-    <span class="badge">{{slideshow.id}}</span> {{slideshow.name}}
-  </li>
-</ul>
-<hr>
-<div *ngIf="selectedSlideshow">
-  <h2>
-    {{selectedSlideshow.name | uppercase}}
-  </h2>
-  <div>
 
-    <input #slidename placeholder="Slide Name" />
-    <button (click)="createSlide(slidename.value); slidename.value=''">
-      Create Slide
-    </button>
-  </div>  
-  <hr>
-  <ul>
-      <li *ngFor="let slide of slides | async">
-          <p>{{slide.index}}</p>
-          <input type="text" #updatename [value]="slide.name" />
-          <button (click)="deleteItem(slide.$key)">Delete</button>
-          <button (click)="updateItem(slide.$key, updatename.value)">Update</button>
-          <input type="file" (change)="addImage( $event, slide.$key )"/>
-          <img src="{{slide.url}}" />
-      </li>
-  </ul>
-  
-</div>
