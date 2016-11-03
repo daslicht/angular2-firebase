@@ -8,6 +8,7 @@ import {
 	FirebaseApp
 } from 'angularfire2';
 import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
 	selector: 'app-slideshows',
@@ -21,7 +22,7 @@ export class SlideshowsComponent implements OnInit {
 	slideshows: FirebaseListObservable<any>;
 	slides: FirebaseListObservable<any>;
 	selectedSlideshow:Slideshow;
-	selectedSlideKeySubject: Subject<any>;
+	selectedSlideKeySubject: BehaviorSubject<any>;
 
 	onSelect( slideshow:Slideshow ) {
 		console.log(slideshow);
@@ -100,7 +101,7 @@ export class SlideshowsComponent implements OnInit {
 
 
 		this.slideshows = this._af.database.list('/slideshows', {});
-		this.selectedSlideKeySubject = new Subject();
+		this.selectedSlideKeySubject = new BehaviorSubject(null);
 		this.slides = this._af.database.list('/slides', {
 			query: {
 				orderByChild: 'slideshowKey',
