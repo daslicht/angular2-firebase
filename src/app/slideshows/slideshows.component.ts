@@ -55,13 +55,15 @@ export class SlideshowsComponent implements OnInit {
 	}
 
 	deleteSelectedSlideshow(key:string) {
+		alert('Really ?')
 		console.log('remove: ', key);
-		this.slideshows.remove(key);
+		//this.slideshows.remove(key);
 	}
 
 	deleteAll() {
-		this.slideshows.remove();
-		this.slides.remove();
+					alert('Really ?')
+		//this.slideshows.remove();
+		//this.slides.remove();
 	}
     resize (img, MAX_WIDTH:number = 900, MAX_HEIGHT:number = 900){
         var canvas = document.createElement("canvas");
