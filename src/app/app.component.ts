@@ -6,7 +6,9 @@ import {
 	AuthProviders,
 	FirebaseApp
 } from 'angularfire2';
-import { Subject } from 'rxjs/Subject';
+
+import { Subject, } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
 	selector: 'app-root',
@@ -18,7 +20,8 @@ export class AppComponent {
 
 	title = 'app works!';
 	user = null;
-	sizeSubject: Subject<any>;
+	sizeSubject: BehaviorSubject<any>;
+
 	//item: FirebaseObjectObservable<any>;
 	items: FirebaseListObservable<any>;
 	name;
@@ -29,7 +32,7 @@ export class AppComponent {
 	image: string;
 	storageRef;
 	constructor(private _af: AngularFire, @Inject(FirebaseApp) _firebaseApp: any, _zone:NgZone) {
-		this.sizeSubject = new Subject();
+		this.sizeSubject = new BehaviorSubject('');
 		this._af.auth.subscribe(user => {
 			if (user) {
 				// user logged in
