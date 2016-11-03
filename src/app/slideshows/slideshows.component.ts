@@ -38,7 +38,7 @@ export class SlideshowsComponent implements OnInit {
 			name = name.trim();
 			if (!name) { return; }
 			console.info('Slideshow Name:' , name);
-			let slideshow = new Slideshow(null);
+			let slideshow = new Slideshow();
 					slideshow.index=0;
 					slideshow.name=name;
 			this.slideshows.push(slideshow);
