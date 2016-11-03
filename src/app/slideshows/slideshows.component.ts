@@ -27,11 +27,6 @@ export class SlideshowsComponent implements OnInit {
 		console.log(slideshow);
 		this.selectedSlideshow = slideshow;
 		this.selectedSlideKeySubject.next( this.selectedSlideshow.$key );
-
-
-		this.slides.subscribe( queriedItems => {
-				console.log('fertig');
-		});
 	}
 
 	createSlideshow( name: string ) {
@@ -111,6 +106,9 @@ export class SlideshowsComponent implements OnInit {
 				orderByChild: 'slideshowKey',
 				equalTo: this.selectedSlideKeySubject
 			}
+		});
+		this.slides.subscribe( queriedItems => {
+				console.log('slides.subscribe change',queriedItems);
 		});
 
 	}
