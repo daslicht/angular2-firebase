@@ -25,36 +25,57 @@ export class AppComponent {
 	//item: FirebaseObjectObservable<any>;
 	items: FirebaseListObservable<any>;
 	name;
+	_firebaseApp;
 	newItem= {
 		size:"",
-		text:""
+		text:"",
+		name:"",
+		path:""
 	};
 	image: string;
 	storageRef;
+	_zone;
 	constructor(private _af: AngularFire, @Inject(FirebaseApp) _firebaseApp: any, _zone:NgZone) {
+<<<<<<< HEAD
 		this.sizeSubject = new BehaviorSubject('');
+=======
+		this._firebaseApp = _firebaseApp;
+		this._zone = _zone;
+		this.sizeSubject = new Subject();
+>>>>>>> 7404afb6ed8a274c9771384a4bbff2e763d33130
 		this._af.auth.subscribe(user => {
 			if (user) {
 				// user logged in
 				this.user = user;
-				console.log('Success: ',this.user);
+				//console.log('Success: ',this.user);
 
-				this.items = _af.database.list('/items', {
-					query: {
-						orderByChild: 'size',
-						equalTo: this.sizeSubject
-					}
+		
+				// this.items = this._af.database.list('/items', {
+				// 	query: {
+				// 		orderByChild: 'size',
+				// 		equalTo: this.sizeSubject
+				// 	}
+				// });
+				this.items = this._af.database.list('/items', {
+
 				});
+
+				// this.items = _af.database.list('/items', {
+		
+				// });
 
 				//this.item = af.database.object('/item');
+				//this.filterBy(null);
 				this.items.subscribe(queriedItems => {
-					console.log("queriedItems: ",queriedItems);  
+					console.log("queriedItems: ",queriedItems);  					
 				});
-
+			
+				
 				this.storageRef = _firebaseApp.storage().ref().child('images/image.png');
 				this.storageRef.getDownloadURL().then(url =>
 					_zone.run(() => { 
 							this.image = url
+							console.log(this.storageRef);
 					})
 				);
 
@@ -98,7 +119,7 @@ export class AppComponent {
 		this.items.update(key, { text: newText });
 	}
 
-	filterBy(size: string) {
+	filterBy(size?: string) {
 		if (size === 'all') {
 			console.log("how ? see: https://github.com/angular/angularfire2/issues/642" );  
 		}
@@ -110,15 +131,43 @@ export class AppComponent {
 
 	uploadImage(event) {
 		var files = event.srcElement.files;
-		var file = files[0]; // use the Blob or File API
-		this.storageRef.put(file).then(function(snapshot) {
+		var file = files[0]; 
+		this.storageRef.put(file).then( (snapshot) => {
 			console.log('Uploaded a blob or file!',snapshot);
 		});
     	console.log(files[0]);
 	}
 
+	addImage(event, key: string) {
+		var d = new Date();
+		var time = d.getTime();
+		console.log('time',time);
+		console.log('key',key);
+		let storageRef = this._firebaseApp.storage().ref().child('images/'+time+'.png');
+		console.log("storageRef",storageRef);
+
+		var files = event.srcElement.files;
+		var file = files[0]; 
+		//console.log(file.name);
+
+		storageRef.put(file).then( (snapshot) => {
+			console.log('Uploaded a blob or file!',snapshot);
+			console.log(snapshot.a.downloadURLs[0]);
+			this._zone.run(() => { 
+				this.items.update(key, { 
+					path: storageRef.a.path,
+					url: snapshot.a.downloadURLs[0],
+					name: file.name
+				});
+		
+			})
+		});
+		
+	}
+
 	ngOnInit() {
 		//console.log('constructor: ',this.item);
+		//this.filterBy();
 	}
 
 }
