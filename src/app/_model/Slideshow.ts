@@ -10,4 +10,5 @@ export class Slideshow  extends FirebaseListObservable<any>{
     index: number;
     name: string;
     $key:string;
+	slides
 }

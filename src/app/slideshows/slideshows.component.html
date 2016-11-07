@@ -31,7 +31,8 @@
     </button>
   </div>  
   <ul>
-      <li *ngFor="let slide of selectedSlideshow.slides | async">
+      <li *ngFor="let slide of slides | async">
+
           <p>{{slide.index}}</p>
           <input type="text" #updatename [value]="slide.name" />
           <button (click)="deleteItem(slide.$key)">Delete</button>
