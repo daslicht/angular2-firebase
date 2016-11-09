@@ -1,5 +1,6 @@
 .slideshow-slides-list { //ul
   list-style: none;
+  float:left;
 	li {
     height:100px;
 		p {
@@ -19,6 +20,43 @@
 		}
 	}
 }
+.form-btn {
+  border-top-left-radius: 0px !important;
+  border-top-right-radius:0 !important;
+  width:193px;
+}
+.form-input{
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius:0 !important;    
+}
+.toolbar{
+  .slideshow-actions-container{
+  }
+}
+.slideshow-slides-container {
+  .list-group {
+    margin-top: 3.6rem;
+    a{
+      /*-webkit-border-top-left-radius: 25px;
+      -webkit-border-bottom-left-radius: 25px;
+      -moz-border-radius-topleft: 25px;
+      -moz-border-radius-bottomleft: 25px;*/
+      border-top-left-radius: 25px;
+      border-bottom-left-radius: 25px;
+      border-top-right-radius:0 !important;
+      border-bottom-right-radius:0 !important;
+      border-right: 0  !important;
+
+    }
+  }
+}
+
+.full-image-container{
+
+}
+
+
+
 
 /*
 .thumbnail, .preview {

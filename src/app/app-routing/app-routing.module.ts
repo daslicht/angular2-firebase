@@ -4,16 +4,16 @@ import { DashboardComponent }   from '../dashboard/dashboard.component';
 import { SlideshowsComponent }   from '../slideshows/slideshows.component';
 
 const routes: Routes = [
-  {   
-    path: '', redirectTo: '/slideshows', 
-    pathMatch: 'full' 
-  },
+  // {   
+  //   path: '', redirectTo: '', 
+  //   pathMatch: 'full' 
+  // },
   { 
     path: 'dashboard',  
     component: DashboardComponent 
   },
   { 
-    path: 'slideshows',  
+    path: '',  
     component: SlideshowsComponent 
   },
 ];

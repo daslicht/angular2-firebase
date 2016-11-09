@@ -1,9 +1,20 @@
-<h1>{{title}}</h1>
 
-<nav>
-	<a routerLink="/slideshows" routerLinkActive="active">Slideshows</a>
-	<!--<a routerLink="/heroes" routerLinkActive="active">Heroes</a>-->
-</nav>
+    <nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
+      <button type="button" class="navbar-toggler hidden-sm-up" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation"></button>
+      <a class="navbar-brand" href="#">Slideshow Manger</a>
+      <div id="navbar">
+        <!--<nav class="nav navbar-nav float-xs-left">-->
+          <!--<a  routerLinkActive="active" class="nav-item nav-link" href="/slideshows">Slideshows</a>-->
+          <!--<a  routerLinkActive="active" class="nav-item nav-link" href="#">Settings</a>
+          <a  routerLinkActive="active" class="nav-item nav-link" href="#">Profile</a>
+          <a  routerLinkActive="active" class="nav-item nav-link" href="#">Help</a>-->
+        <!--</nav>
+        <form class="float-xs-right">
+          <input type="text" class="form-control" placeholder="Search...">
+        </form>-->
+      </div>
+    </nav>
 
-<router-outlet></router-outlet>
-
+<div class="mt-3 pt-3 container">
+	<router-outlet></router-outlet>
+</div>
