@@ -127,19 +127,7 @@ export class SlideshowsComponent implements OnInit {
 			console.log('success!, File deleted successfully',)
 		}).catch((error)=> {
 			console.log('error: ',error)
-		});
-
-		/*
-			// Create a reference to the file to delete
-			var desertRef = storageRef.child('images/desert.jpg');
-			// Delete the file
-			desertRef.delete().then(function() {
-				// File deleted successfully
-			}).catch(function(error) {
-				// Uh-oh, an error occurred!
-			});
-		 */
-		 
+		});		 
 	}
 
 	/**
