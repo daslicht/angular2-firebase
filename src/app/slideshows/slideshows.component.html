@@ -30,16 +30,34 @@
       Create Slide
     </button>
   </div>  
-  <ul>
+  <ul class="slideshow-slides-list">
       <li *ngFor="let slide of slides | async">
-
+          <img src="{{slide.preview}}" />
           <p>{{slide.index}}</p>
           <input type="text" #updatename [value]="slide.name" />
-          <button (click)="deleteItem(slide.$key)">Delete</button>
-          <button (click)="updateItem(slide.$key, updatename.value)">Update</button>
-          <input type="file" (change)="addImage( $event, slide.$key )"/>
-          <img src="{{slide.url}}" />
+          <button (click)="deleteSlide(slide.$key, slide)">Delete</button>
+          <button (click)="updateSlide(slide.$key, updatename.value)">Update</button>
+          <input type="file" (change)="addImageToSlide( $event, slide.$key , slide)"/>
       </li>
   </ul>
   
 </div>
+
+<!--<div class="container-fluid">
+    <div class="col-md-12">
+        <h1>FireFile Upload</h1>
+
+        <p><input type="file" (change)="handleFileSelect( $event )" accept="image/*" capture="camera" id="file-upload" class="form-control"></p>
+
+        <div class="preview-wrapper hidden" id="preview-wrapper">
+
+
+            <img class="preview" id="preview" alt="Image preview" src="" />
+        </div>
+        <br />
+        <img class="thumbnail thumb hidden" id="thumb" />
+
+        <img src="" style="display:none" alt="" class="hidden" id="hidden-img" />
+
+    </div>
+</div>-->

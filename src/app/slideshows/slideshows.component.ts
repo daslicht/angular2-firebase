@@ -1,3 +1,4 @@
+import { ImageHelper, VO } from './ImageHelper';
 import { Slideshow } from './../_model/Slideshow';
 import { Slide } from './../_model/Slide';
 import { Component, Inject, NgZone, OnInit } from '@angular/core';
@@ -9,99 +10,154 @@ import {
 	FirebaseApp
 } from 'angularfire2';
 
+import * as firebase from 'firebase';
+
 @Component({
 	selector: 'app-slideshows',
 	templateUrl: './slideshows.component.html',
-	styleUrls: ['./slideshows.component.css']
+	styleUrls: ['./slideshows.component.scss']
 })
+
 export class SlideshowsComponent implements OnInit {
 
 	_zone;
 	_firebaseApp;
 	slideshows : FirebaseListObservable<any>;
 	slides : FirebaseListObservable<any>;
-	selectedSlideshow: Slideshow;
+	selectedSlideshow:Slideshow;
+	imageHelper:ImageHelper;
 
-	generateArray( obj:any ) {
-		return Object.keys(obj).map((key)=>{ return obj[key]});
-	}
+    private _messaging: firebase.messaging.Messaging;
 
+	/**
+	 * Set Selected Slideshow as current
+	 */
 	onSelect( slideshow:Slideshow ) {
 		console.log(slideshow.$key);
+		console.log('type?', typeof(slideshow) );
 		this.slides = this._af.database.list('/slideshows/'+slideshow.$key+'/slides',{});
 		this.selectedSlideshow = slideshow;	
+		console.log(document);
 	}
 
+	/**
+	 * Add Slideshow Item to Slideshows Collection
+	 */
 	createSlideshow( name: string ) {
 		name = name.trim();
 		if (!name) { return; }
-		console.info('Slideshow Name:' , name);
-		let slideshow = new Slideshow(null);
-				slideshow.index=0;
-				slideshow.name=name;
+		let slideshow = new Slideshow();
+			slideshow.index=0;
+			slideshow.name=name;
 		this.slideshows.push(slideshow);
+		console.info('Slideshow :' , slideshow);
 	}
 
+	/**
+	 * Add Slide Item to Slides Collection
+	 */
 	createSlide(name: string) {
 		name = name.trim();
 		let selectedSlideshowKey = this.selectedSlideshow.$key;
 		if (!name) { return; }
+		let slide = new Slide();
+			slide.name = name
+			slide.preview='https://placeholdit.imgix.net/~text?txtsize=9&txt=100×100&w=100&h=100'
 		console.info('Slide Name:' , name);
 		console.info('selected key' , this.selectedSlideshow.$key);
-		this._af.database.list('/slideshows/'+this.selectedSlideshow.$key+'/slides').push({
-			name:name
+		this._af.database.list('/slideshows/'+this.selectedSlideshow.$key+'/slides').push(slide);
+	}
+
+	/**
+	 * Add Image to Slide Item
+	 */
+	addImageToSlide(event, key: string, slide:Slide) {
+		let d = new Date();
+		let time = d.getTime();
+		let storageRef = this._firebaseApp.storage().ref().child('images/'+time+'.png');
+		console.log('key',key);
+		console.log("storageRef",storageRef);
+
+		let files = event.srcElement.files;
+		let file = files[0]; 
+
+		this.imageHelper.resizeWithCanvas(file).then((vo:VO)=>{
+			console.log("VO:",vo)
+			slide.url = vo.preview;
+			storageRef.put(file).then( (snapshot) => {
+				console.log('Uploaded a blob or file!',snapshot)
+				console.log(snapshot.a.downloadURLs[0])
+
+				let _slide = new Slide()
+					_slide.path = storageRef.a.path
+					_slide.url = snapshot.a.downloadURLs[0]
+					_slide.preview = vo.preview
+					
+				this.slides.update(key, _slide );
+			});
 		});
 	}
 
-	addImage() {
-
-	}
-	deleteAll() {
+	/**
+	 * BEHAVE !
+	 */
+	deleteAllSlideshows() {
 		this.slideshows.remove();
 	}
-	updateItem( key:string, name:string ) {
+
+	/**
+	 * Update Slide
+	 */
+	updateSlide( key:string, name:string ) {
 		console.log('key slide', key);
 		let _slide = new Slide();
 			_slide.name = name;
+		this.slides.update(key, {name:name});
+	}
 
-		// slide.name = name;
-		// console.log('slide', JSON.stringify(slide) )
-		 this.slides.update(key, {name:name});
-	}
-	deleteItem( key:string ) {
-		//delete Image
-		//delete slide
+	/**
+	 * Delete Slide
+	 */
+	deleteSlide( key:string, slide:Slide ) {
+		console.log(slide);
+		let storageRef = this._firebaseApp.storage().ref().child(slide.path);
+
 		this.slides.remove(key);
+		storageRef.delete().then(()=> {
+			console.log('success!, File deleted successfully',)
+		}).catch((error)=> {
+			console.log('error: ',error)
+		});
+
+		/*
+			// Create a reference to the file to delete
+			var desertRef = storageRef.child('images/desert.jpg');
+			// Delete the file
+			desertRef.delete().then(function() {
+				// File deleted successfully
+			}).catch(function(error) {
+				// Uh-oh, an error occurred!
+			});
+		 */
+		 
 	}
-	constructor( private _af: AngularFire, @Inject(FirebaseApp) _firebaseApp: any, _zone:NgZone) {
+
+	/**
+	 * Constructor
+	 */
+	constructor( private _af: AngularFire, @Inject(FirebaseApp) _firebaseApp: firebase.app.App, _zone:NgZone) {
 		this._zone = _zone;
 		this._firebaseApp = _firebaseApp;
 		this.slideshows = this._af.database.list('/slideshows', {});
-		const messaging = _firebaseApp.messaging();
-
-		messaging.requestPermission()
-			.then(function() {
-				console.log('Notification permission granted.');
-			// TODO(developer): Retrieve an Instance ID token for use with FCM.
-			// ...
-			})
-			.catch(function(err) {
-				console.log('Unable to get permission to notify.', err);
-			});
-		// this.slideshows.subscribe(snapshots => {
-		// 	console.log('length: ',snapshots.length);
-		// })
-		// console.log(this.slideshows);
-		// this.slideshows.subscribe(snapshots => {
-		// 	console.log(snapshots.length);
-		// 	// snapshots.forEach(snapshot => {
-
-		// 	// 	console.log('snapshot: ' , snapshot );
-		// 	// 	// console.log('snapshot.key' , snapshot.key );
-		// 	// 	// console.log('snapshot.vla:' , snapshot.val() );
-		// 	// });
-		// })
-
+		this.imageHelper = new ImageHelper();
+		// this._messaging = firebase.messaging(this._firebaseApp);
+        // this._messaging.requestPermission()
+        //     .then(() => {
+		// 		console.log('coool')
+		// 	})
+        //     .catch((error) => {
+		// 		console.log('error', error)
+		// 	});
 	}
 
 	ngOnInit() {}

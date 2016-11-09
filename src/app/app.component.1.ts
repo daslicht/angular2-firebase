@@ -135,13 +135,12 @@ export class AppComponent {
 		var d = new Date();
 		var time = d.getTime();
 		console.log('time',time);
-		console.log('key',key);
 		let storageRef = this._firebaseApp.storage().ref().child('images/'+time+'.png');
+		console.log('key',key);
 		console.log("storageRef",storageRef);
 
 		var files = event.srcElement.files;
 		var file = files[0]; 
-		//console.log(file.name);
 
 		storageRef.put(file).then( (snapshot) => {
 			console.log('Uploaded a blob or file!',snapshot);
@@ -155,7 +154,6 @@ export class AppComponent {
 		
 			})
 		});
-		
 	}
 
 	ngOnInit() {

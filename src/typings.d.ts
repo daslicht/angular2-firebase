@@ -4,3 +4,9 @@
 declare var System: any;
 declare var require: NodeRequire;
 declare var module: NodeModule;
+
+interface Document { 
+	getElementById(elementId: "preview"): HTMLImageElement 
+	getElementById(elementId: "hidden-img"): HTMLImageElement 
+}
+
