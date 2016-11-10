@@ -1,0 +1,17 @@
+<div *ngIf="slideshows" class="list-group col-sm-4">
+	<div class="slideshow-actions-container">
+		<div class="form-inline">
+			<div class="form-group">
+				<input class="form-control form-input" #slideshowName placeholder="Slideshow Name" />
+				<button class="btn form-btn btn-success" (click)="createSlideshow(slideshowName.value); slideshowName.value=''">
+              Create Slideshow
+            </button>
+			</div>
+		</div>
+	</div>
+
+	<a *ngFor="let slideshow of slideshows | async" [class.active]="slideshow === selectedSlideshow" (click)="onSelect(slideshow)"
+		class="list-group-item list-group-item-action">
+		{{slideshow.name}}
+  	</a>
+</div>

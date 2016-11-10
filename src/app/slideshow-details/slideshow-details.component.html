@@ -1,0 +1,52 @@
+<button (click)="doit(slideshow)">doit</button>
+<div *ngIf="slideshow" class="col-sm-8">
+    <div class="toolbar">
+
+      <div class="col-sm-4">
+        <div class="form-inline">
+          <div class="form-group">
+            <input class="form-control form-input" #slidename placeholder="Slide Name" />
+            <button class="btn form-btn btn-success" (click)="createSlide(slidename.value); slidename.value=''">
+              Create Slide
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button style="opacity:0" (click)="deleteAll()">NUKE! </button>
+    </div>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>index</th>
+					<th>Preview</th>
+					<th>Name</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let slide of slides | async;trackBy: trackByFn">
+					<th scope="row">1</th>
+					<td><img src="{{slide.preview}}" class="preview-image" (click)="openFileDialog( slide )" /></td>
+					<td>
+						<p><input type="text" #updatename [value]="slide.name" /></p>
+						<h6><i class="fa fa-long-arrow-left" aria-hidden="true"></i> click to add image</h6>
+					</td>
+					<td>
+						<div class="btn-group" role="group" aria-label="actions">
+							<button (click)="deleteSlide(slide.$key, slide)" type="button" class="btn btn-secondary"><i class="fa fa-trash" aria-hidden="true"></i></button>
+							<button (click)="updateSlide(slide.$key, updatename.value)" type="button" class="btn btn-secondary"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+							<button (click)="showFullImage(slide)" type="button" class="btn btn-secondary"><i class="fa fa-eye" aria-hidden="true"></i></button>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<!--<input  (click)="openFileDialog( event ) class="file-input" type="file"/>		-->
+
+		<div *ngIf="full_image" class="full-image-container">
+			<img src="{{full_image}}" />
+		</div>
+	</div>

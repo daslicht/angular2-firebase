@@ -13,6 +13,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SlideshowsComponent } from './slideshows/slideshows.component';
 import { AppRoutingComponent } from './app-routing/app-routing.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
+import { SlideshowListComponent } from './slideshow-list/slideshow-list.component';
+import { SlideshowDetailsComponent } from './slideshow-details/slideshow-details.component';
 
 
 
@@ -36,7 +38,9 @@ const firebaseAuthConfig = {
     AppComponent,
     DashboardComponent,
     SlideshowsComponent,
-    AppRoutingComponent
+    AppRoutingComponent,
+    SlideshowListComponent,
+    SlideshowDetailsComponent
   ],
   imports: [
     BrowserModule,
