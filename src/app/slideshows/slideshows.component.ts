@@ -35,8 +35,6 @@ export class SlideshowsComponent implements OnInit {
 	 * Set Selected Slideshow as current
 	 */
 	onSelect( slideshow:Slideshow ) {
-		
-
 		this.selectedSlideshow = slideshow	
 		console.log(slideshow.$key)
 		console.log('type?', typeof(slideshow) )
@@ -54,6 +52,13 @@ export class SlideshowsComponent implements OnInit {
 			slideshow.name=name
 		this.slideshows.push(slideshow)
 		console.info('Slideshow :' , slideshow)
+	}
+	/***
+	 * see: https://medium.com/@NetanelBasal/angular-2-improve-performance-with-trackby-cc147b5104e5#.f3zkxuibd
+	 */
+	trackByFn(index, item) {
+		console.log('trackby! called')
+		return index; // or item.id
 	}
 
 	/**
@@ -171,7 +176,8 @@ export class SlideshowsComponent implements OnInit {
 		this.imageHelper = new ImageHelper()
 
 		this.slideshows.subscribe(snapshot => {
-			this.onSelect( snapshot[0] )
+			//select first item, how to set the first item in the slideshow list active ?
+			this.onSelect( snapshot[0] ) 
 			console.log(snapshot[0]);
 			// let element = document.querySelector(".slideshow-slides-container .list-group a:first-child");
 			// 	element.className += " " + "active";

@@ -52,7 +52,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let slide of slides | async">
+				<tr *ngFor="let slide of slides | async;trackBy: trackByFn">
 					<th scope="row">1</th>
 					<td><img src="{{slide.preview}}" class="preview-image" (click)="openFileDialog( slide )" /></td>
 					<td>
