@@ -1,7 +1,7 @@
-import { SlideshowsService } from './../slideshows.service';
-import { Slideshow } from './../_model/Slideshow';
+import { DataStore } from './../_data/data.store';
+import { Slideshow } from './../_data/types/Slideshow';
 import { Component, OnInit, Input } from '@angular/core';
-
+import {BehaviorSubject} from "rxjs/Rx";
 import {
 	AngularFire,
 	FirebaseObjectObservable,
@@ -18,13 +18,12 @@ import {
 export class SlideshowListComponent implements OnInit {
 
 	@Input()
-	slideshows: FirebaseListObservable<any>;
-	selectedSlideshow:Slideshow
-	slides : FirebaseListObservable<any>
+	slideshows:BehaviorSubject<FirebaseListObservable<Slideshow[]>>
 
+	// @Input()
+	// slides : FirebaseListObservable<any>
 
-	constructor( private slideshowsService: SlideshowsService,
-				 private _af: AngularFire) { }
+	constructor( private dataStore:DataStore) { }
 
 
 	/**
@@ -32,31 +31,18 @@ export class SlideshowListComponent implements OnInit {
 	 */
 	onSelect( slideshow:Slideshow ) {
 		
-		this.selectedSlideshow = slideshow	
-		console.log(slideshow.$key)
-		console.log('type?', typeof(slideshow) )
-		//this.slides = this.slideshowsService.getSlideshow(slideshow)	
-		this.slideshowsService.selectedSlideshow = slideshow;
 	}
 
-	/**
-	 * Add Slideshow Item to Slideshows Collection
-	 */
 	createSlideshow(name: string) {
-		name = name.trim()
-		if (!name) { return }
-		let slideshow = new Slideshow()
-		slideshow.index = 0
-		slideshow.name = name
-		this.slideshows.push(slideshow)
-		console.info('Slideshow :', slideshow)
+		//this.dataStore.createSlideshow(slideshow, name)
 	}
 	/**
 	 * BEHAVE !
 	 */
 	deleteAllSlideshows() {
-		this.slideshows.remove()
+		
 	}
+
 	ngOnInit() {
 	}
 

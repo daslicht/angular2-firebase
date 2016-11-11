@@ -1,9 +1,8 @@
-import { SlideshowsService } from './../slideshows.service';
-import { ImageHelper, VO } from './ImageHelper'
-import { Slideshow } from './../_model/Slideshow'
-import { Slide } from './../_model/Slide'
+import { DataStore } from './../_data/data.store';
+import { SlidesService } from './../_data/slides.service';
+import { SlideshowsService } from './../_data/slideshows.service';
 import { Component, Inject, NgZone, OnInit } from '@angular/core'
-
+import {Observable} from 'rxjs/Observable';
 
 import {
 	AngularFire,
@@ -19,46 +18,19 @@ import * as firebase from 'firebase'
 	selector: 'app-slideshows',
 	templateUrl: './slideshows.component.html',
 	styleUrls: ['./slideshows.component.scss'],
-	providers:[SlideshowsService]
+	providers:[SlideshowsService,SlidesService]
 })
 
 export class SlideshowsComponent implements OnInit {
 
-	_zone
-	//_firebaseApp
-	slideshows : FirebaseListObservable<Slideshow[]>
-	selectedSlideshow: Slideshow
-	selectedSlideshowSlides: FirebaseListObservable<Slide[]>
-	// slides : FirebaseListObservable<any>
-	// selectedSlideshow:Slideshow
-	// imageHelper:ImageHelper
-	// full_image:string
-    // currentSlide:Slide;
-
-
-	_getSlideshows() {
-		this.slideshows =  this.slideshowsService.slideshows;
-		this.selectedSlideshow =  this.slideshowsService.selectedSlideshow;
-		console.log('this.slideshowsService.slideshows :', this.slideshowsService.slideshows);
-	} 
-
-
 	/**
+	 * 	
 	 * Constructor
 	 * see: https://angular.io/docs/ts/latest/tutorial/toh-pt4.html
 	 */
-	constructor(private slideshowsService: SlideshowsService,  
-				@Inject(FirebaseApp) _firebaseApp: firebase.app.App,) {
-
-		console.log('slideshowsService:::',)
-
-	}
+	constructor( private dataStrore: DataStore ) {}
 
 	ngOnInit() {
-		this.slideshows =  this.slideshowsService.slideshows;
-		this.selectedSlideshow =  this.slideshowsService.selectedSlideshow;
-		this.selectedSlideshowSlides = this.slideshowsService.selectedSlideshowSlides;
-
-		//this._getSlideshows();
+		
 	}
 }

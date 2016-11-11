@@ -1,10 +1,11 @@
 <div class="row slideshow-slides-container mt-1" id="slideshow-slides-container">
 
-	<app-slideshow-list [slideshows]="slideshows"></app-slideshow-list>
+	<app-slideshow-list [slideshows]="dataStore.slideshows"></app-slideshow-list>
 
-	<app-slideshow-details 
+	<!--<app-slideshow-details 
 		[slideshow]="selectedSlideshow" 
-		[slides]="selectedSlideshowSlides">
+		[slides]="selectedSlideshowSlides"
+	>
 	</app-slideshow-details>
-	
+	-->
 </div>

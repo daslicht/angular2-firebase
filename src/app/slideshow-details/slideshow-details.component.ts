@@ -1,6 +1,6 @@
-import { ImageHelper,VO } from './../slideshows/ImageHelper'
-import { Slideshow } from './../_model/Slideshow'
-import { Slide } from './../_model/Slide'
+import { ImageHelper,VO } from '../slideshows/ImageHelper'
+import { Slideshow } from '../_data/types/Slideshow'
+import { Slide } from '../_data/types/Slide'
 import { Component, OnInit, Input, Inject } from '@angular/core'
 import {
 	AngularFire,
@@ -19,7 +19,7 @@ import {
 export class SlideshowDetailsComponent implements OnInit {
 
 	@Input()
-	slideshow: Slideshow
+	slideshow: Slideshow 
 
 	@Input()
 	slides: FirebaseListObservable<Slide[]>
@@ -39,29 +39,17 @@ export class SlideshowDetailsComponent implements OnInit {
 	doit(slideshow){
 		console.log('doit', this.slideshow)
 	}
-	/**
-	 * Add Slide Item to Slides Collection
-	 */
+
 	createSlide(name: string) {
-		name = name.trim()
-		let selectedSlideshowKey = this.slideshow.$key
-		if (!name) { return }
-		let slide = new Slide()
-		slide.name = name
-		slide.preview = 'https://placeholdit.imgix.net/~text?txtsize=9&txt=100×100&w=100&h=100'
-		console.info('Slide Name:', name)
-		console.info('selected key', this.slideshow.$key)
-		this._af.database.list('/slideshows/' + this.slideshow.$key + '/slides').push(slide)
+
 	}
 
-	/**
-	 * Update Slide
-	 */
+	readSlides() {
+
+	}
+
 	updateSlide( key:string, name:string ) {
-		console.log('key slide', key)
-		let _slide = new Slide()
-			_slide.name = name
-		this.slides.update(key, {name:name})
+
 	}
 
 	/**
@@ -143,7 +131,7 @@ export class SlideshowDetailsComponent implements OnInit {
 		this.full_image = slide.url
 	}
 	ngOnInit() {
-		console.log('details slideshow: ', this.slideshow)
+		//console.log('details slideshow: ', this.slideshow)
 	}
 
 }
