@@ -30,7 +30,7 @@ export class SlideshowListComponent implements OnInit {
 	 * Set Selected Slideshow as current
 	 */
 	onSelect( slideshow:Slideshow ) {
-		
+		this.dataStore.selectSlideshow(slideshow);	
 	}
 
 	createSlideshow(name: string) {

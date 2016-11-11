@@ -1,5 +1,10 @@
 <button (click)="doit(selectedSlideshow)">doit</button>
-<div class="col-sm-8">
+	<pre>
+		{{ selectedSlideshow | async | json }}
+	</pre>
+
+<div *ngIf="selectedSlideshow" class="col-sm-8">
+	pliff
     <div class="toolbar">
 
       <div class="col-sm-4">
@@ -16,7 +21,7 @@
       <button style="opacity:0" (click)="deleteAll()">NUKE! </button>
     </div>
 
-		<table class="table">
+		<table class="table" *ngIf="">
 			<thead>
 				<tr>
 					<th>index</th>
@@ -26,7 +31,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let slide of slides | async;trackBy: trackByFn">
+				<tr *ngFor="let slide of slides | async; trackBy: trackByFn">
 					<th scope="row">1</th>
 					<td><img src="{{slide.preview}}" class="preview-image" (click)="openFileDialog( slide )" /></td>
 					<td>

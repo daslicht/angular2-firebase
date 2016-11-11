@@ -22,7 +22,7 @@ export class SlideshowsService {
 
 	}
 
-	readSlideshows() {
+	readSlideshows(): FirebaseListObservable<Slideshow[]> {
 		return  this._af.database.list('/slideshows', {}) as FirebaseListObservable<Slideshow[]>
 	}
 	

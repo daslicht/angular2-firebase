@@ -28,7 +28,7 @@ export class SlideshowsComponent implements OnInit {
 	 * Constructor
 	 * see: https://angular.io/docs/ts/latest/tutorial/toh-pt4.html
 	 */
-	constructor( private dataStrore: DataStore ) {}
+	constructor( private dataStore: DataStore ) {}
 
 	ngOnInit() {
 		

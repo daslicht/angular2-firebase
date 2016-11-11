@@ -1,11 +1,17 @@
 <div class="row slideshow-slides-container mt-1" id="slideshow-slides-container">
 
+	<!--<pre>
+		{{ dataStore.selectedSlideshow | async | json }}
+	</pre>-->
 	<app-slideshow-list [slideshows]="dataStore.slideshows"></app-slideshow-list>
 
-	<!--<app-slideshow-details 
-		[slideshow]="selectedSlideshow" 
-		[slides]="selectedSlideshowSlides"
+	<app-slideshow-details 
+		[selectedSlideshow]="dataStore.selectedSlideshow"
 	>
+	<!--<app-slideshow-details 
+		[selectedSlideshow]="dataStore.selectedSlideshow"
+	>-->
 	</app-slideshow-details>
-	-->
+
+
 </div>

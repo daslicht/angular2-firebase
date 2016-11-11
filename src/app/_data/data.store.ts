@@ -16,14 +16,24 @@ import {
 @Injectable()
 export class DataStore {
 
-	slideshows:BehaviorSubject<FirebaseListObservable<Slideshow[]>>
-	slides:BehaviorSubject<FirebaseListObservable<Slideshow[]>>
-	selectedSlideshow:BehaviorSubject<Slideshow>
-	selectedSlideshowSlides:BehaviorSubject<FirebaseListObservable<Slide[]>>
+	slideshows:FirebaseListObservable<Slideshow[]>
+	slides:FirebaseListObservable<Slideshow[]>
+	selectedSlideshow:BehaviorSubject<Slideshow> 
+	//selectedSlideshow:FirebaseObjectObservable<Slideshow>
+	private selectedSlideshowSlides:FirebaseListObservable<Slide[]>
 
 	constructor( private slideshowsService:SlideshowsService,  private slidesService:SlidesService ) {
-		this.slideshows =  new BehaviorSubject(<FirebaseListObservable<Slideshow[]>> );
 		this.readSlideshows()
+		this.selectedSlideshow = new BehaviorSubject('');
+		this.slideshows.subscribe( (data) => {
+			console.log(data)
+			//this.selectedSlideshow = data[0] as FirebaseObjectObservable<Slideshow>
+			this.selectedSlideshow.next( data[0] )
+		})
+		// this.selectedSlideshow = new BehaviorSubject(null);
+		this.selectedSlideshow.subscribe( (snapshot)=> {
+			console.log('selectedSlideshow changed: ', snapshot )
+		})
 	}
 
 	createSlideshow( slideshow:Slideshow ) {
@@ -31,7 +41,7 @@ export class DataStore {
 	}
 
 	readSlideshows() { 
-		this.slideshows.next( this.slideshowsService.readSlideshows() );	
+		this.slideshows = this.slideshowsService.readSlideshows();	
 	}
 
 	updateSlideshow( slideshow:Slideshow ) {
@@ -43,7 +53,8 @@ export class DataStore {
 	}
 
 	selectSlideshow( slideshow:Slideshow ) {
-
+		//this.selectedSlideshow.next(slideshow )
+		this.selectedSlideshow.next(slideshow)   //as FirebaseObjectObservable<Slideshow>
 	}
 //-
 	createSlide( slideshow:Slideshow , name:string) {
@@ -51,7 +62,7 @@ export class DataStore {
 	}
 
 	readSlides() { 
-		this.slideshows.next( this.slideshowsService.readSlideshows() );	
+		return this.slideshowsService.readSlideshows() 	
 	}
 
 	updateSlide( slideshow:Slideshow ) {
